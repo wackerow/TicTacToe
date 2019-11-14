@@ -4,6 +4,17 @@ def print_board(array):
         print(item)
     print("\n")
 
+def valid_move(num, board):
+    # Confirm location is valid and empty
+    if num not in [str(x) for x in range(1,10)]:
+        print("Must be a number between 1 - 9. Please try again.")
+        return False
+    elif board[int(num)] != " ":
+        print("Spot already taken!! Please try again.")
+        return False
+    else:
+        return True
+
 def update_board_array(dict):
     return ["   |   |   ",
           f" {dict[1]} | {dict[2]} | {dict[3]} ",
@@ -18,27 +29,17 @@ def update_board_array(dict):
           "   |   |   "]
 
 def game_won(player, key, board):
+    # Array of winning combinations
+    winning_combos = [[1,2,3],[4,5,6],[7,8,9], # Rows
+                      [1,4,7],[2,5,8],[3,6,9], # Columns
+                      [1,5,9],[3,5,7]] # Diags
+
     # Check if game has been won!
-    if key == 1 and ((board[2] == board[3] == player) or (board[5] == board[9] == player) or (board[4] == board[7] == player)):
-        return True
-    elif key == 2 and ((board[1] == board[3] == player) or (board[5] == board[8] == player)):
-        return True
-    elif key == 3 and ((board[1] == board[2] == player) or (board[5] == board[7] == player) or (board[6] == board[9] == player)):
-        return True
-    elif key == 4 and ((board[1] == board[7] == player) or (board[5] == board[6] == player)):
-        return True
-    elif key == 5 and ((board[1] == board[9] == player) or (board[7] == board[3] == player) or (board[4] == board[6] == player) or (board[2] == board[8] == player)):
-        return True
-    elif key == 6 and ((board[4] == board[5] == player) or (board[3] == board[9] == player)):
-        return True
-    elif key == 7 and ((board[1] == board[4] == player) or (board[5] == board[3] == player) or (board[8] == board[9] == player)):
-        return True
-    elif key == 8 and ((board[7] == board[9] == player) or (board[2] == board[5] == player)):
-        return True
-    elif key == 9 and ((board[1] == board[5] == player) or (board[7] == board[8] == player) or (board[3] == board[6] == player)):
-        return True
-    else:
-        return False
+    for combo in winning_combos:
+        if board[combo[0]] == board[combo[1]] == board[combo[2]] == player:
+            return True
+    return False
+
 
 def board_full(board):
     # Check if board full:
@@ -49,28 +50,10 @@ def game_over(winner="cat"):
     if winner in ("X","O"):
         print(f"Player {winner.upper()} wins!!")
     else:
-        print("Sorry, Cat's game!")
+        print("Sorry, cat's game!")
 
     # Prompt user to play again or end script
-    play_again = input("Press Enter to play again, or type 'end' to finish: ")
-    if play_again.lower() == "end":
-        # Game officially over
-        print("Thanks for playing!")
-        return True
-    else:
-        # Game will restart
-        return False
-
-def valid_move(num, board):
-    # Confirm location is valid and empty
-    if num not in ["1", "2", "3", "4", "5", "6", "7", "8", "9"]:
-        print("Must be a number between 1 - 9. Please try again.")
-        return False
-    elif board[int(num)] != " ":
-        print("Spot already taken!! Please try again.")
-        return False
-    else:
-        return True
+    return input("Press Enter to play again, or type 'end' to finish: ").lower() == "end"
 
 def play_game():
     print("\nWelcome to Tic-Tac-Toe!\n")
@@ -129,19 +112,19 @@ def play_game():
             elif board_full(board_values_dict):
                 game_is_over = True
                 winner = "cat"
-
             # Otherwise, game continues
             # Swap player_turn:
-            elif player_turn == "X":
-                player_turn = "O"
-            elif player_turn == "O":
-                player_turn = "X"
-        else:
+
+            else:
+                player_turn = {"X":"O", "O":"X"}[player_turn]
+
+        else: # Move was invalid
             continue # continue WHILE loop without changing player_x_turn boolean
 
     # Game is over, declare winner, prompt for new game
     if game_over(winner):
-        return # game officially over, end script
+        # Game officially over, end script
+        print("Thanks for playing!")
     else:
         play_game()
 
