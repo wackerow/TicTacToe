@@ -67,7 +67,7 @@ def board_full(board):
 def game_over(winner):
     """
     :param winner: "X", "O" or "cat" depending on winner
-    :return: Boolean is game to end or not (False = Replay)
+    :return: Boolean if game to end or not (False = Replay)
     """
 
     # Game over code, run after someone wins or board fills without winner
