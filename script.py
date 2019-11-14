@@ -1,4 +1,13 @@
+"""
+Tic-Tac-Toe Python Game!
+"""
+
 def print_board(array):
+    """
+    :param array: Array of markers corresponding to game board
+    :return: None (Prints to display current game board)
+    """
+
     print("\n")
     print(f"{array[1]}|{array[2]}|{array[3]}")
     print("-+-+-")
@@ -8,19 +17,31 @@ def print_board(array):
     print("\n")
 
 
-def valid_move(num, board):
-    # Confirm location is valid and empty
-    if num not in [str(x) for x in range(1, 10)]:
+def valid_move(user_input, board):
+    """
+    :param user_input: Users input to be checked for validity
+    :param board: Array of markers for current game state (before new move)
+    :return: Boolean if move was valid or not
+    """
+
+    # Confirm user input is valid (1-9)
+    if user_input not in [str(x) for x in range(1, 10)]:
         print("Must be a number between 1 - 9. Please try again.")
         return False
-    elif board[int(num)] != " ":
+    # Confirm location is empty
+    if board[int(user_input)] != " ":
         print("Spot already taken!! Please try again.")
         return False
-    else:
-        return True
+    return True
 
 
 def game_won(player, board):
+    """
+    :param player: "X" or "O" depending which turn
+    :param board: Array of markers for current game state
+    :return: Boolean if game was won or not
+    """
+
     # Array of winning combinations
     winning_combos = [[1, 2, 3], [4, 5, 6], [7, 8, 9],  # Rows
                       [1, 4, 7], [2, 5, 8], [3, 6, 9],  # Columns
@@ -34,11 +55,21 @@ def game_won(player, board):
 
 
 def board_full(board):
+    """
+    :param board: Array of markers for current game state
+    :return: Boolean if board full or not (Tie game)
+    """
+
     # Check if board full:
     return " " not in board
 
 
 def game_over(winner):
+    """
+    :param winner: "X", "O" or "cat" depending on winner
+    :return: Boolean is game to end or not (False = Replay)
+    """
+
     # Game over code, run after someone wins or board fills without winner
     if winner in ("X", "O"):
         print(f"Player {winner.upper()} wins!!")
@@ -50,12 +81,16 @@ def game_over(winner):
 
 
 def play_game():
+    """
+    Tic Tac Toe game play script
+    :return: None
+    """
     print("\nWelcome to Tic-Tac-Toe!\n")
     print("Two-players will take turns placing an X or an O on the board \
 using numbers that correspond to different locations on the playing board:\n")
 
     # Board layout to display for player reference
-    print_board([x for x in range(10)])
+    print_board(range(10))
 
     print("First player to get three-in-a-row wins!! X always goes first!\n")
     input("Press enter when ready to start!")
