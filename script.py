@@ -86,6 +86,8 @@ def play_game():
     Tic Tac Toe game play script
     :return: None
     """
+
+    # Game introduction / instructions
     print("\nWelcome to Tic-Tac-Toe!\n")
     print("Two-players will take turns placing an X or an O on the board \
 using numbers that correspond to different locations on the playing board:\n")
