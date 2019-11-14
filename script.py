@@ -24,7 +24,7 @@ def game_won(player, board):
     # Array of winning combinations
     winning_combos = [[1, 2, 3], [4, 5, 6], [7, 8, 9],  # Rows
                       [1, 4, 7], [2, 5, 8], [3, 6, 9],  # Columns
-                      [1, 5, 9], [3, 5, 7]]  # Diags
+                      [1, 5, 9], [3, 5, 7]]  # Diagonals
 
     # Check if game has been won!
     for combo in winning_combos:
@@ -38,7 +38,7 @@ def board_full(board):
     return " " not in board
 
 
-def game_over(winner="cat"):
+def game_over(winner):
     # Game over code, run after someone wins or board fills without winner
     if winner in ("X", "O"):
         print(f"Player {winner.upper()} wins!!")
